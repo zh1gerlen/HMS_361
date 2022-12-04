@@ -1,0 +1,27 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+
+<head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+      <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    
+    </head>
+
+{% block content %}
+<center>
+    <h1 class="mb-3">Patients</h1>
+
+    {% for pat in pat %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+             <h2><a class="mr-2"  href="{% url 'pat_detail' pat.pid %}" > {{pat.pid}} </a></h2> 
+            </div>
+            <h2><a class="article-title"  href="{% url 'pat_detail' pat.pid %}" >{{ pat.user.first_name  }} </a></h2>
+          </div>
+        </article>
+    {% endfor %}
+</center>
+{% endblock content %}

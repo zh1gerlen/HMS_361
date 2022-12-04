@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <style type="text/css">
+    .bs-example {
+      margin: 0px;
+
+    }
+
+
+    
+    .navbar-brand {
+      font-size: 20px;
+      font-family: sans-serif;
+
+    }
+  </style>
+</head>
+
+<body>
+
+
+
+  <div class="bs-example">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background:#16c6da;">
+      <a href="/" class="navbar-brand">Hospital Management</a>
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+
+      
+      <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+        <div class="navbar-nav">
+        {%if user.is_authenticated%}
+        <div class="navbar-nav">
+            <a href="{%url 'logout'%}" class = "nav-item nav-link" >Logout</a>
+        </div>
+  
+        {%else%}
+          <a href="/accounts/login" class="nav-item nav-link">Login</a>
+          <a href="/accounts/register" class="nav-item nav-link">Register</a>
+
+
+        </div>
+
+        <div class="navbar-nav">
+          <a href="/accounts/contactus" class="nav-item nav-link">Contact Us</a>
+        </div>
+                {%endif%}
+                {% ifequal user.last_name "Doctor"%}
+                <a href="{% url 'profile' %}" class = "nav-item nav-link">Profile></a>
+                <a href="{%url 'appointments'%}"class = "nav-item nav-link">Appointments</a>
+                <a href="{% url 'showpres' %}"class = "nav-item nav-link">Prescriptions</a>
+                <a href="{% url 'uprofile' %}"class = "nav-item nav-link">Update Profile</a>
+                <!--- <a href="{% url 'rooms' %}"class = "nav-item nav-link">Messages</a> -->
+                <a href="{% url 'list_patients' %}"class = "nav-item nav-link">Patients</a>
+                <a href="{% url 'rooms' %}"class = "nav-item nav-link">Messages</a>
+
+                {% endifequal %}
+                {% ifequal user.last_name "Patient"%}
+                <a href="{% url 'profile' %}"class = "nav-item nav-link">Profile</a>
+                <a href="{%url 'appointments'%}"class = "nav-item nav-link">Appointments</a>
+                <a href="{% url 'showmedhis' %}"class = "nav-item nav-link">Medical History</a>
+                <a href="{% url 'uprofile' %}"class = "nav-item nav-link">Update Profile</a>
+                <a href="{% url 'rooms' %}"class = "nav-item nav-link">Messages</a>
+
+                {% endifequal %}
+
+
+
+      </div>
+    </nav>
+  </div>
+
+
+</body>
+
+</html>

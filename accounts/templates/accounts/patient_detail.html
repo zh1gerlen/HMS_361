@@ -1,0 +1,52 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+
+<head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+      <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    
+    </head>
+
+{% block content %}
+<center>
+    <h1 class="mb-3">Patient</h1>
+
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+             <h2><a class="mr-2"  > {{pat.user.first_name}} </a></h2> 
+             <h2><a class="mr-2"  > {{pat.phone}} </a></h2> 
+
+             <h2><a class="mr-2"  > {{ pat.age }} </a></h2> 
+
+             <h2><a class="mr-2"  > {{pat.government_id}} </a></h2> 
+
+            </div>
+            <h2><a class="article-title" >{{pat.gender}} </a></h2>
+            <h2><a class="article-content">{{ pat.caregiver }}</a></h2>
+
+          </div>
+        </article>
+        <a href="{{ pat.image}}"  download ><img src="{{image }}" alt="" class="img-fluid "></a>
+
+        
+    {% for pre in pres %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+         <h2><a class="mr-2" {{pre.prid}} </a></h2> 
+        </div>
+        <h2><a class="article-title"  >{{ pre.doctor  }} </a></h2>
+        <h2><a class="article-title"  >{{ pre.prescription  }} </a></h2>
+        <h2><a class="article-title"  >{{ pre.date  }} </a></h2>
+
+      </div>
+    </article>
+
+{% endfor %}
+<a class="btn btn-primary" href="{% url 'generate_pdf' pat.pid %}" role="button">Generate pdf for this patient</a>
+
+</center>
+{% endblock content %}

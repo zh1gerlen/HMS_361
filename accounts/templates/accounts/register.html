@@ -1,0 +1,84 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+
+
+{%block content%}    
+
+
+<head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+
+    <title>Register</title>
+	{%load static%}
+    <link href="{% static 'css/bootstrap.min.css' %}" >  
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>  
+
+    <title>Registration Page</title>
+    <style>
+        body{
+            background-color: rgb(255, 255, 255);
+        }
+        form{
+            margin-top: 40px;
+            width: 35%;
+            top: 50%;
+            font-weight: bold;
+            padding: 10px;
+            border: 2px solid white;
+        }
+        ::-webkit-scrollbar{
+display: none;
+}
+        input{
+            border: 2px solid black;
+            width: 250px;
+            margin: 10px;
+            text-align: center;
+            font-size: 15px;
+            height: 35px;
+            border-radius: 4px;
+        }
+        input:hover{
+            cursor: pointer;
+        }
+        select{
+            
+            border: 2px solid black;
+            width: 250px;
+            margin: 10px;
+            text-align: center;
+            font-size: 15px;
+            height: 35px;
+            border-radius: 4px;
+
+        }
+    </style>
+</head>
+<body>
+    <center>
+    <form method="POST">
+        {% csrf_token %}
+        <h1 style="color: rgb(6, 6, 6);font-family: Arial;"> Sign Up </h1>
+        {% for m in messages %}
+        <p style="color: rgb(11, 10, 10);width: 250px;background-color: red;">{{m}}</p>
+        {% endfor %}
+        <select name='type'>
+            <option value="Patient">Patient</option>
+            <option value="Doctor">Doctor</option>
+        </select><br>
+        <input type="text" placeholder="Full Name" name="fname" required>
+        <input type="email" placeholder="Email" name="email" required>
+        <input type="text" placeholder="Phone Number" name="phone" required>
+        <input type="password" placeholder="Password" name="password1" required>
+        <input type="password" placeholder="Repeat Password" name="password2" required><br><br>
+        <a href="{% url 'login' %}">Already have an account? Sign-in now!</a><br>
+        <input type="submit" style="background-color: green;color: white;border: none;border-radius: 25px;font-weight: bold;" value="Register">
+    </form>
+</center>
+</body>
+
+{%endblock content%}    

@@ -1,0 +1,86 @@
+
+
+{% extends 'home/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+
+<head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <style media="screen">
+    .jumbotron {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      background-image: url('{% static "images/dr_house.jpg" %}');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .jumbotron h5,
+    h3 {
+      text-align: center;
+    }
+
+
+    .alert {
+      margin: 0px;
+    }
+
+
+
+    .glow {
+      font-size: 50px;
+      color: white;
+      text-align: center;
+      -webkit-animation: glow 1s ease-in-out infinite alternate;
+      -moz-animation: glow 1s ease-in-out infinite alternate;
+      animation: glow 1s ease-in-out infinite alternate;
+    }
+
+    @-webkit-keyframes glow {
+      from {
+        text-shadow: 0 0 10px #eeeeee, 0 0 20px #000000, 0 0 30px #000000, 0 0 40px #000000, 0 0 50px #9554b3, 0 0 60px #9554b3, 0 0 70px #9554b3;
+      }
+
+      to {
+        text-shadow: 0 0 20px #eeeeee, 0 0 30px #6b02eb, 0 0 40px #130069, 0 0 50px #4308f5, 0 0 60px #4dedff, 0 0 70px #003cef, 0 0 80px #0856bc;
+      }
+    }
+  </style>
+</head>
+
+
+<div class="jumbotron" style="margin-bottom: 0px;margin-top: 0px;">
+
+ 
+
+  <h5 class="display-4 glow">Hospital management system</h5>
+  <br><br><br>
+  <p>
+    <h3 class="display-5 glow">Emergency?</h3>
+
+  <p class="lead">
+<!-- nado checknut' ih zaregannost'!!!! -->
+
+    {%if user.is_authenticated%}
+    
+    <a class="btn btn-primary btn-lg" href="/appointments/setapt" role="button">Take an appointment</a>
+    {%else%}
+    <a class="btn btn-primary btn-lg" href="/accounts/register" role="button">Take an appointment</a>
+    
+    {%endif%}
+    <br><br><br>
+  </p>
+  <br><br><br><br><br>
+</div>
+
+
+
+
+
+{% endblock content %}
