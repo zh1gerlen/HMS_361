@@ -30,8 +30,11 @@
           </div>
         </article>
         <a href="{{ pat.image}}"  download ><img src="{{image }}" alt="" class="img-fluid "></a>
+        <br>
+        <a class="btn btn-primary" href="{% url 'setapt_pat' pat.pid %}" role="button">Set appointment</a>
+        <br>
+        <a class="btn btn-primary" href="{% url 'addpres_pat' pat.pid %}" role="button">Give prescription</a>
 
-        
     {% for pre in pres %}
     <article class="media content-section">
       <div class="media-body">

@@ -73,6 +73,13 @@
                 <a href="{% url 'showmedhis' %}"class = "nav-item nav-link">Medical History</a>
                 <a href="{% url 'uprofile' %}"class = "nav-item nav-link">Update Profile</a>
                 <a href="{% url 'rooms' %}"class = "nav-item nav-link">Messages</a>
+                {% endifequal %}
+
+                {% ifequal user.last_name "Reception"%}
+                <a href="{% url 'dashboard' %}"class = "nav-item nav-link">Dashboard</a>
+                <a href="{%url 'accounting'%}"class = "nav-item nav-link">Accounting</a>
+               
+
 
                 {% endifequal %}
 

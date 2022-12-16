@@ -28,3 +28,18 @@ def showmedhis(request):
     pre=Prescription.objects.filter(patient=doc).all()
     return render(request,'prescriptions/showmedhis.html',{'pre':pre})
 
+@login_required 
+def addpres_pat(request, **kwargs): 
+    pid = kwargs.get('pid')
+    doc=Doctor.objects.filter(user=request.user).first()
+    p=Patient.objects.filter(pid = pid).all()
+    if request.method=='POST':
+        patname=request.POST['pat']
+        pres=request.POST['pres']
+        us=User.objects.filter(first_name=patname).first()
+        pat=Patient.objects.filter(user=us).first()
+        dis=request.POST['dis']
+        prescript=Prescription(prescription=pres,patient=pat,doctor=doc,disease=dis)
+        prescript.save()
+        return redirect("showpres")
+    return render(request,'prescriptions/addpres.html',{'p':p})

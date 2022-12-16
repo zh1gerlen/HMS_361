@@ -10,4 +10,5 @@ urlpatterns=[
     path('showinvoice/',views.show,name='show'),
     path('send/',views.send,name='send'),
     path('payments/',views.payments,name='payments'),
+
 ]

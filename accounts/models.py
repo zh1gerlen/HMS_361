@@ -44,3 +44,7 @@ class Doctor(models.Model):
     
     def __str__(self):
         return f'{self.user.first_name}'
+
+class HR(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    mid=models.AutoField(primary_key=True)

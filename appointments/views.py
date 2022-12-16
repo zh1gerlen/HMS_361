@@ -59,14 +59,12 @@ def createpat(request):
             gender=request.POST['gender']
             age=request.POST['age']
             add=request.POST['address']
-            bg=request.POST['bloodgroup']
-            casepaper=request.POST['casepaper']
             if User.objects.filter(username=email).exists():
                 messages.info(request,"Email Id already Exists!")
                 return redirect('crtpat')
             else:
                 user=User.objects.create_user(first_name=fname,last_name='Patient',username=email,email=email)
-                pro=Patient(user=user,phone=phone,gender=gender,age=age,address=add,bloodgroup=bg,casepaper=casepaper,image=image)
+                pro=Patient(user=user,phone=phone,gender=gender,age=age,address=add,image=image)
                 pro.save()
                 return redirect('reception')
     return render(request,'appointments/crtpat.html')
@@ -112,3 +110,74 @@ def setapt(request):
         a.save()
         return redirect('appointments')
     return render(request,'appointments/setapt.html',{'d':d,'p':p,'m':m,'da':da,'y':y,'h':h})
+
+def setapt_pat(request, **kwargs):
+    pid = kwargs.get('pid')
+    d=Doctor.objects.all()
+    p=Patient.objects.filter(pid = pid).first()
+    da=[]
+    y=[]
+    h=[]
+    m=['00','15','30','45']
+    for x in range(2022,2031):
+        y.append(x)
+    for x in range(1,32):
+        da.append(x)
+    for x in range(1,13):
+        h.append(x)
+    if request.method=='POST':
+        hours=request.POST['hours']
+        min=request.POST['min']
+        am=request.POST['am']
+        time=hours+" : "+min+" "+am
+        doc=request.POST['doc']
+        pat=request.POST['pat']
+        sta=request.POST['status']
+        dat=request.POST['d']
+        month=request.POST['m']
+        year=request.POST['y']
+        date=dat+"-"+month+"-"+year
+        user1=User.objects.filter(first_name=pat).first()
+        user2=User.objects.filter(first_name=doc).first()
+        pa=Patient.objects.filter(user=user1).first()
+        do=Doctor.objects.filter(user=user2).first()
+        a=Appointment.objects.create(patient=pa,doctor=do,time=time,date=date,status=sta)
+        a.save()
+        return redirect('appointments')
+    return render(request,'appointments/setapt_pat.html',{'d':d,'p':p,'m':m,'da':da,'y':y,'h':h})
+
+
+def modify_appointment(request, **kwargs): 
+    aid = kwargs.get('aid')
+    app = Appointment.objects.filter(aid = aid).first()
+    if request.method == 'POST': 
+        app.status = request.POST['status']
+        hours=request.POST['hours']
+        min=request.POST['min']
+        am=request.POST['am']
+                
+        dat=request.POST['d']
+        month=request.POST['m']
+        year=request.POST['y']
+        date=dat+"-"+month+"-"+year
+        time=hours+" : "+min+" "+am
+        app.date = date
+        app.time = time
+        date=dat+"-"+month+"-"+year
+        return redirect('appointments')
+
+    da=[]
+    y=[]
+    h=[]
+    m=['00','15','30','45']
+    for x in range(2022,2031):
+        y.append(x)
+    for x in range(1,32):
+        da.append(x)
+    for x in range(1,13):
+        h.append(x)    
+    app.save()
+
+    appwws = {'app' : app,'m':m,'da':da,'y':y,'h':h}
+    return render(request, 'appointments/modify_appointment.html', appwws)
+

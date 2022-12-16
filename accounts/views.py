@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User,auth
 from django.contrib.auth.decorators import login_required
-from .models import Patient,Doctor
+from .models import Patient,Doctor, HR
 from prescriptions.models import Prescription
 from django.contrib import messages
 import datetime
@@ -12,6 +12,7 @@ from reportlab.lib.utils import ImageReader
 from datetime            import datetime
 from django.http import HttpResponse
 from django.http import FileResponse
+from django.db.models import Q
 
 def register(request):
     if request.method=='POST':
@@ -74,17 +75,16 @@ def login(request):
 
 @login_required
 def uprofile(request):
+    pro={}
     if request.user.last_name=='Doctor':
         pro=Doctor.objects.filter(user=request.user).first()
     if request.user.last_name=='Patient':
         pro=Patient.objects.filter(user=request.user).first()
     if request.user.last_name=='Reception':
-        pid=request.POST['pid']
-        pro=Patient.objects.filter(pid=pid).first()
+        return redirect('dashboard') 
     if request.method=='POST':
         if request.user.last_name=='Reception':
-            pid=request.POST['pid']
-            pro=Patient.objects.filter(pid=pid).first()
+            return redirect('dashboard') 
         if request.user.last_name=='HR':
             pid=request.POST['pid']
             pro=Doctor.objects.filter(did=pid).first()
@@ -122,7 +122,10 @@ def profile(request):
     if request.user.last_name=='Doctor':
         pro=Doctor.objects.filter(user=request.user).first()
     if request.user.last_name=='Patient':
+        
         pro=Patient.objects.filter(user=request.user).first()
+    if request.user.last_name=='Reception':
+        pro=HR.objects.filter(user=request.user).first()
     c={'pro':pro}
     return render(request,'accounts/profile.html',c)
 
@@ -133,6 +136,22 @@ def list_patients(request):
     pro=Patient.objects.all()
     c={'pat':pro}
     return render(request,'accounts/list_patients.html',c)
+
+
+    
+
+def search(request):
+    template='accounts/search_patient.html'
+
+    query=request.GET.get('q')
+    temp = User.objects.filter(Q(first_name__icontains = query)|Q(last_name__icontains = query)|Q(username__icontains = query)|Q(email__icontains = query))
+    result = {}
+    for usr in temp:
+        result=Patient.objects.filter(user = usr)
+    paginate_by=2
+    context={ 'pats':result }
+    return render(request,template,context)
+   
 
 @login_required
 def generate_pdf(request, pk):

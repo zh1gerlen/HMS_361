@@ -10,6 +10,10 @@
     </head>
 
 {% block content %}
+<form id="searchform" action="{% url 'search' %}" method="get">
+  <input type="text" name="q" type="text" value="{{ request.GET.q }}" placeholder="Search Here..." />
+  <button type="button" onclick="searchform.submit()" class=" text-white my-color btn-primary"><i class="fa fa-search"></i></button>
+</form>
 <center>
     <h1 class="mb-3">Patients</h1>
 
@@ -17,7 +21,7 @@
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-             <h2><a class="mr-2"  href="{% url 'pat_detail' pat.pid %}" > {{pat.pid}} </a></h2> 
+             <h2><a class="mr-2" href="{% url 'pat_detail' pat.pid %}" > </a> {{pat.pid}} </a></h2> 
             </div>
             <h2><a class="article-title"  href="{% url 'pat_detail' pat.pid %}" >{{ pat.user.first_name  }} </a></h2>
           </div>

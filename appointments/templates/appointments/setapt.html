@@ -37,6 +37,12 @@
         {%endifequal%}
         {%endfor%}
     </select>
+    <tr><th>Doctor:</th><th><select name="doc">
+      {% for d in d %}
+      <option value="{{d}}">{{d}}</option>
+      {%endfor%}
+  </select>
+  </th></tr>
 {%else%}
 
     <tr><th>Patient:</th><th><select name="pat">
@@ -45,19 +51,30 @@
     {%endfor%}
     </select>
     </th></tr>
-    {%endifequal%}
+       
     <tr><th>Doctor:</th><th><select name="doc">
         {% for d in d %}
+        {%ifequal d.user user%}
         <option value="{{d}}">{{d}}</option>
+        {%endifequal%}
+
         {%endfor%}
     </select>
     </th></tr>
+    {%endifequal%}
+
+    {% ifequal user.last_name "Patient" %}
 
     <tr><th>Status</th><th><select name='status'>
         <option value="Pending">Pending</option>
-        <option value="Completed">Completed</option>
     </select></th></tr>
-    
+    {%else %}  
+
+    <tr><th>Status</th><th><select name='status'>
+      <option value="Pending">Pending</option>
+      <option value="Completed">Completed</option>
+  </select></th></tr>
+{%endifequal%}
     
     <tr><th>Time:</th><th><select name="hours">
         {% for h in h %}

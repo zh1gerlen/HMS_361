@@ -11,6 +11,7 @@ urlpatterns=[
     path('list_patients/',views.list_patients,name='list_patients'),
     path('list_patients/<int:pk>',views.patient_detail,name='pat_detail'),
     path('<int:pk>',views.generate_pdf,name='generate_pdf'),
+    path('list_patients/search/',views.search,name='search' ),
 
 
 ]

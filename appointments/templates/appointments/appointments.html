@@ -16,7 +16,8 @@
             
             <tr><th>Date</th><th>Time</th><th>Patient</th><th>Status</th></tr>
             {% for ap in ap %}
-            <tr><th>{{ap.date}}</th><th>{{ap.time}}</th><th>{{ap.patient}}</th><th>{{ap.status}}</th></tr>
+            <tr><th>{{ap.date}}</th><th>{{ap.time}}</th><th>{{ap.patient}}</th><th>{{ap.status}}</th><th><a class="btn btn-primary" href="{% url 'modify_appoint' ap.aid %}" role="button">Modify appointment</a>
+            </th></tr>
             {% endfor %}
             {% endifequal %}
     {% else %}

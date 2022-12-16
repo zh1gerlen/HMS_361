@@ -1,0 +1,25 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<center>
+<h1>Patients :</p> 
+{%if pats%}
+{% for post in pats %}
+    <div>
+        <a href="{% url 'pat_detail' post.pid %}"><h2 class="page-title">{{ post.user.first_name }}</h2></a>
+        <div class="post">
+            {{ post.body|safe }}
+        </div>
+    </div>
+{% endfor %}
+
+{%else%}
+<div>
+    <a ><h2 class="page-title">No patients found</h2></a>
+    <div class="post">
+        {{ post.body|safe }}
+    </div>
+</div>
+{%endif%}
+</center>
+{% endblock content %}
